@@ -35,7 +35,7 @@ class ApoloCommand extends Command
         $data = [];
 
         try {
-            for ($i = 600; $i < 2000; $i++) {
+            for ($i = 401; $i < 2000; $i++) {
                 if ($i%100 == 0) {
                     $this->info('Sleep: '.$i);
                     sleep(30);
