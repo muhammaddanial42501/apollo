@@ -58,6 +58,7 @@ class ApoloCommand extends Command
                         "2001,5000", "201,500", "21,50", "51,100", "101,200", "501,1000", "1001,2000",
                     ],
                     "display_mode" => "explorer_mode",
+                    "organization_industry_tag_ids" => ["5567ce1f7369643b78570000"],
                     "per_page" => 25,
                     "context" => "people-index-page",
                     "sort_ascending" => false,
@@ -117,21 +118,25 @@ class ApoloCommand extends Command
                         $cfoRegex = '/cfo|chief financial officer/i';
                         $cfoOtherRegex = '/payable|controller|accountant|invoice|payroll/i';
 
-                        if (preg_match($ceoRegex, $title) && ! $this->matchedPreviousTitle($peopleArray, $ceoRegex) && ! $this->matchedPreviousTitle($peopleArray, $ceoOtherRegex)) {
+                        if (preg_match($ceoRegex, $title)) {
                             $good = true;
-                            $this->info('1');
-                        } else if (! preg_match($ceoRegex, $title) && ! $this->matchedPreviousTitle($peopleArray, $ceoRegex) && preg_match($ceoOtherRegex, $title) && ! $this->matchedPreviousTitle($peopleArray, $ceoOtherRegex)) {
-                            $good = true;
-                            $this->info('2');
-                        } else if (preg_match($cfoRegex, $title) && ! $this->matchedPreviousTitle($peopleArray, $cfoRegex) && ! $this->matchedPreviousTitle($peopleArray, $cfoOtherRegex)) {
-                            $good = true;
-                            $this->info('3');
-                        } else if (! preg_match($cfoRegex, $title) && ! $this->matchedPreviousTitle($peopleArray, $cfoRegex) && preg_match($cfoOtherRegex, $title) && ! $this->matchedPreviousTitle($peopleArray, $cfoOtherRegex)) {
-                            $good = true;
-                            $this->info('4');
-                        } else {
-                            $good = false;
                         }
+
+                        // if (preg_match($ceoRegex, $title) && ! $this->matchedPreviousTitle($peopleArray, $ceoRegex) && ! $this->matchedPreviousTitle($peopleArray, $ceoOtherRegex)) {
+                        //     $good = true;
+                        //     $this->info('1');
+                        // } else if (! preg_match($ceoRegex, $title) && ! $this->matchedPreviousTitle($peopleArray, $ceoRegex) && preg_match($ceoOtherRegex, $title) && ! $this->matchedPreviousTitle($peopleArray, $ceoOtherRegex)) {
+                        //     $good = true;
+                        //     $this->info('2');
+                        // } else if (preg_match($cfoRegex, $title) && ! $this->matchedPreviousTitle($peopleArray, $cfoRegex) && ! $this->matchedPreviousTitle($peopleArray, $cfoOtherRegex)) {
+                        //     $good = true;
+                        //     $this->info('3');
+                        // } else if (! preg_match($cfoRegex, $title) && ! $this->matchedPreviousTitle($peopleArray, $cfoRegex) && preg_match($cfoOtherRegex, $title) && ! $this->matchedPreviousTitle($peopleArray, $cfoOtherRegex)) {
+                        //     $good = true;
+                        //     $this->info('4');
+                        // } else {
+                        //     $good = false;
+                        // }
                     }
 
                     if ($good) {
@@ -151,6 +156,7 @@ class ApoloCommand extends Command
         }
 
         foreach ($data as $people) {
+        
             if (count($people) == 2) {
                 fputcsv($fp1, [
                     $people[0]['companyName'],
